@@ -16,6 +16,7 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 
 // Import middleware
 import { errorHandler } from './middleware/errorHandler.js';
+import connectDB from './config/database.js';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(helmet({
   crossOriginResourcePolicy: false,
 }));
 
+const clientUrl = process.env.CLIENT_URL ? process.env.CLIENT_URL.replace(/\/+$/, '') : null;
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
@@ -34,7 +36,8 @@ const allowedOrigins = [
   'http://127.0.0.1:5174',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
-  process.env.CLIENT_URL,
+  'https://grievdesk.vercel.app',
+  clientUrl,
 ].filter(Boolean);
 
 app.use(cors({
@@ -81,6 +84,52 @@ const aiLimiter = rateLimit({
   },
 });
 
+// Root and public routes (do not require database connection)
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'GrievDesk API is running',
+    version: '1.0.0',
+    status: 'operational',
+    frontend: 'https://grievdesk.vercel.app',
+    endpoints: {
+      health: '/health',
+      auth: '/api/auth',
+      complaints: '/api/complaints',
+      departments: '/api/departments',
+      notifications: '/api/notifications',
+      users: '/api/users',
+      ai: '/api/ai',
+      dashboard: '/api/dashboard',
+    },
+  });
+});
+
+// Health check
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Server is running',
+  });
+});
+
+// Ensure database connection for all /api routes (vital for Vercel serverless)
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection error in request middleware:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Database connection failed. Please verify MongoDB Atlas credentials and IP Access List.',
+      error: process.env.NODE_ENV === 'production' ? undefined : error.message,
+    });
+  }
+});
+
 // Apply rate limiters
 app.use('/api/', limiter);
 app.use('/api/ai/', aiLimiter);
@@ -93,14 +142,6 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-
-// Health check
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'Server is running',
-  });
-});
 
 // 404 handler
 app.use((req, res) => {
