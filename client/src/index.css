@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font-script {
+  font-family: 'Caveat', cursive, sans-serif;
+}
+
+* {
+  @apply scroll-smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-[#F7F5F0] dark:bg-[#0B0F15] text-[#1F2937] dark:text-[#F8FAFC];
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   GrievDesk Lightweight GPU-Accelerated Theme Transition
+   Duration: 380ms (within target 350–450ms)
+   Easing: cubic-bezier(0.4, 0, 0.2, 1)
+   Uses pure GPU texture blend via View Transition API.
+   Child DOM elements are NEVER universally transitioned to prevent frame drops.
+   ========================================================================== */
+
+/* Native View Transition API Rules */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-[#141A26] rounded-xl border border-[#EBE8DF] dark:border-[#1E2738] shadow-xs hover:shadow-sm;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-[#1F2937] hover:bg-black text-white dark:bg-[#1C2332] dark:hover:bg-[#252E42] border border-[#1F2937] dark:border-[#2D384D] hover:border-[#D49838] dark:hover:border-[#E5A93C]/60 shadow-xs disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gradient-to-r from-[#D49838] to-[#BF7E22] hover:from-[#C88A2E] hover:to-[#AF7019] text-white dark:from-[#E5A93C] dark:to-[#D49838] dark:text-[#0B0F15] font-bold shadow-xs disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply btn bg-[#F0F1F3] hover:bg-[#E2E5E9] dark:bg-[#252C36] dark:hover:bg-[#343A46] text-[#1F2937] dark:text-[#F8FAFC] border border-[#E2E5E9] dark:border-[#343A46] hover:border-[#B8892E]/40 dark:hover:border-[#C89B3C]/40;
+  }
+
+  .btn-gold {
+    @apply btn bg-[#B8892E] hover:bg-[#A07525] text-white dark:bg-[#C89B3C] dark:hover:bg-[#B0842E] dark:text-[#0F1115] font-bold shadow-md shadow-[#B8892E]/20 dark:shadow-[#C89B3C]/20 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-gold {
+    @apply badge bg-[#B8892E]/10 text-[#B8892E] border border-[#B8892E]/30 dark:bg-[#C89B3C]/15 dark:text-[#E0B85C] dark:border-[#C89B3C]/40;
+  }
+
+  .badge-charcoal {
+    @apply badge bg-[#F0F1F3] text-[#374151] border border-[#E2E5E9] dark:bg-[#252C36] dark:text-[#D1D5DB] dark:border-[#343A46];
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 dark:border-emerald-500/30;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20 dark:border-amber-500/30;
+  }
+
+  .badge-error {
+    @apply badge bg-red-500/10 text-red-700 dark:text-red-400 border border-red-500/20 dark:border-red-500/30;
+  }
+
+  .badge-info {
+    @apply badge bg-[#EFF6FF] text-[#2563EB] border border-[#BFDBFE] dark:bg-[#122238] dark:text-[#60A5FA] dark:border-[#1C3252];
+  }
+
+  .input,
+  .input-field {
+    @apply w-full px-3.5 py-2 border border-[#EBE8DF] dark:border-[#1E2738] rounded-lg bg-white dark:bg-[#141A26] text-[#1F2937] dark:text-[#F8FAFC] placeholder-[#9CA3AF] dark:placeholder-[#64748B] focus:outline-none focus:ring-2 focus:ring-[#D49838]/30 dark:focus:ring-[#E5A93C]/40 focus:border-[#D49838] dark:focus:border-[#E5A93C] transition-colors;
+  }
+
+  select.input,
+  select.input-field,
+  select {
+    @apply bg-white dark:bg-[#141A26] text-[#1F2937] dark:text-[#F8FAFC] border-[#EBE8DF] dark:border-[#1E2738];
+  }
+
+  .form-error {
+    @apply text-red-600 dark:text-red-400 text-sm mt-1;
+  }
+
+  .skeleton {
+    @apply bg-[#EBE8DF] dark:bg-[#1E2738] rounded animate-pulse;
+  }
+
+  .container-max {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* ==========================================================================
+   Form Controls & Select Option Distinct Contrast Styling
+   Guarantees background color and text color are distinctly different
+   ========================================================================== */
+select,
+input,
+textarea {
+  color-scheme: light;
+}
+
+.dark select,
+.dark input,
+.dark textarea {
+  color-scheme: dark;
+}
+
+/* Light Theme: Clean white background with dark charcoal text */
+select option {
+  background-color: #FFFFFF !important;
+  color: #1F2937 !important;
+}
+
+/* Dark Theme: Deep charcoal/navy background with bright silver/white text */
+.dark select option,
+html.dark select option {
+  background-color: #141A26 !important;
+  color: #F8FAFC !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[#F7F5F0] dark:bg-[#0B0F15];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#D5CFBE] dark:bg-[#1E2738] rounded-full hover:bg-[#D49838] dark:hover:bg-[#E5A93C];
+}
+
+/* Selection styling */
+::selection {
+  @apply bg-[#B8892E] text-white dark:bg-[#C89B3C] dark:text-[#0F1115];
+}
+
+::-moz-selection {
+  @apply bg-[#B8892E] text-white dark:bg-[#C89B3C] dark:text-[#0F1115];
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-gold-500;
+}

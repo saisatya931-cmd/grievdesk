@@ -1,0 +1,39 @@
+{
+  "name": "grievdesk-server",
+  "version": "1.0.0",
+  "description": "Smart Complaint Resolution Framework - Backend",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "seed:admin": "node scripts/seedAdmin.js",
+    "seed:users": "node scripts/seedUsers.js"
+  },
+  "keywords": [
+    "complaint",
+    "resolution",
+    "education",
+    "mern"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "dotenv": "^16.0.3",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^6.7.0",
+    "morgan": "^1.10.0",
+    "axios": "^1.4.0",
+    "multer": "^1.4.5-lts.1",
+    "express-async-errors": "^3.1.1",
+    "joi": "^17.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
